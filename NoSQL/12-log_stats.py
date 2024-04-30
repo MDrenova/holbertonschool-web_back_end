@@ -2,24 +2,32 @@
 '''
 NoSQL
 '''
+
+
 from pymongo import MongoClient
 
-# Connect to MongoDB
-client = MongoClient('your_mongodb_uri')
-db = client['logs']
-collection = db['nginx']
 
-# Get total number of logs
-total_logs = collection.count_documents({})
-print(f"{total_logs} logs")
+def log_stats():
+    """ Provides some stats about Nginx logs stored in MongoDB """
+    client = MongoClient('mongodb://localhost:27017/')
+    logs_collection = client.logs.nginx
 
-# Get count each method
-methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-print("Methods:")
-for method in methods:
-    count = collection.count_documents({"method": method})
-    print(f"\t{method}: {count}")
+    # Number of documents
+    total_docs = logs_collection.count_documents({})
+    print(f"{total_docs} logs")
 
-# Get count of documents with method=GET and path=/status
-count_status = collection.count_documents({"method": "GET", "path": "/status"})
-print(f"GET /status: {count_status}")
+    print("Methods:")
+    # Number of documents by method
+    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    for method in methods:
+        count = logs_collection.count_documents({'method': method})
+        print(f"\tmethod {method}: {count}")
+
+    # Number of documents with method=GET and path=/status
+    count = logs_collection.count_documents
+    ({'method': 'GET', 'path': '/status'})
+    print(f"{count} status check")
+
+
+if __name__ == "__main__":
+    log_stats()
