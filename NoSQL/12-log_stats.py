@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 '''
 Module to print status of logs and
-most Methods
+most methods
 '''
 
 
