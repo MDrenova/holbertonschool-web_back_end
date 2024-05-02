@@ -3,6 +3,8 @@
 Module to print status of logs and
 most Methods
 '''
+
+
 from pymongo import MongoClient
 
 if __name__ == "__main__":
